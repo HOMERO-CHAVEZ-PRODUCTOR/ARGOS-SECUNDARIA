@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRADUACIÓN | ARGOS SECUNDARIA 2026</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Paleta Conceptual: Negro, Blanco/Plata y Acentos Olivo */
+            --argos-accent: #556B2F; /* Tono verde olivo sofisticado mencionado en el PDF */
+            --text-light: #F4F4F4; 
+            --bg-dark: #050505;
+            --transition-smooth: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- ARQUITECTURA BASE --- */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html {
+            background-color: var(--bg-dark);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif;
+            color: var(--text-light);
+            line-height: 1.8; 
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* --- FONDO DE IMAGEN (3.png) --- */
+        .bg-image {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background-image: url('3.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -3;
+        }
+
+        /* --- CAPA DE OSCURECIMIENTO PARA LEGIBILIDAD --- */
+        .vignette-overlay {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(5, 5, 5, 0.65); /* Oscurecimiento elegante */
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* --- TIPOGRAFÍA ALATA PARA TÍTULOS --- */
+        h1, h2, h3, h4, strong, .timeline-row span:first-child {
+            font-family: 'Alata', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: normal;
+        }
+
+        h1 { color: var(--text-light); }
+        h3, h4, strong, .timeline-row span:first-child { color: var(--argos-accent); } 
+
+        /* --- ANIMACIONES GENERALES --- */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal-node { 
+            opacity: 0; 
+            animation: reveal 1.2s ease forwards; 
+        }
+
+        /* --- EFECTO DE LUCES/VELAS FLOTANTES --- */
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+
+        .magic-particles {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; 
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -20px;
+            background-color: var(--argos-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 12px 2px rgba(85, 107, 47, 0.6), 0 0 24px 6px rgba(244, 244, 244, 0.2);
+            animation: floatUp linear infinite;
+        }
+
+        .p1 { left: 15%; width: 8px; height: 8px; animation-duration: 14s; animation-delay: 0s; }
+        .p2 { left: 30%; width: 12px; height: 12px; animation-duration: 18s; animation-delay: 3s; background-color: var(--text-light); box-shadow: 0 0 15px 3px rgba(244, 244, 244, 0.6);}
+        .p3 { left: 45%; width: 6px; height: 6px; animation-duration: 12s; animation-delay: 5s; }
+        .p4 { left: 65%; width: 14px; height: 14px; animation-duration: 19s; animation-delay: 1s; background-color: var(--text-light); box-shadow: 0 0 15px 3px rgba(244, 244, 244, 0.6);}
+        .p5 { left: 80%; width: 9px; height: 9px; animation-duration: 15s; animation-delay: 6s; }
+
+        /* --- PORTADA --- */
+        header {
+            position: relative;
+            min-height: 100vh;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center;
+            padding: 40px;
+            overflow: hidden; 
+        }
+
+        header div.reveal-node { 
+            position: relative; 
+            z-index: 10; 
+            max-width: 900px; 
+            background: rgba(5, 5, 5, 0.5);
+            padding: 50px 70px;
+            border-radius: 15px;
+            border: 1px solid rgba(85, 107, 47, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        header h1 { 
+            font-size: clamp(2.2rem, 8vw, 4.5rem); 
+            margin-bottom: 5px; 
+            color: var(--text-light); 
+        }
+
+        header p { 
+            font-size: 1.1rem; 
+            letter-spacing: 10px; 
+            color: var(--argos-accent); 
+            margin-top: 20px; 
+        }
+
+        header hr { 
+            width: 100px; 
+            height: 2px; 
+            border: none; 
+            background: var(--text-light); 
+            margin: 30px auto; 
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        main {
+            position: relative;
+            padding: 100px 20px;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .intro-block { 
+            max-width: 800px; 
+            margin: 0 auto 80px; 
+            font-size: 1.3rem; 
+            font-weight: 300; 
+            line-height: 2.2; 
+        }
+        
+        .date-display {
+            display: inline-flex;
+            gap: 40px;
+            font-size: clamp(2.5rem, 11vw, 5rem);
+            padding: 30px 70px;
+            margin-bottom: 110px;
+            border-top: 1px solid rgba(85, 107, 47, 0.5); 
+            border-bottom: 1px solid rgba(85, 107, 47, 0.5);
+            font-family: 'Alata', sans-serif;
+            color: var(--text-light);
+            background: rgba(5, 5, 5, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        /* --- UBICACIÓN --- */
+        .location-box {
+            max-width: 850px;
+            margin: 0 auto 130px;
+        }
+
+        .location-box h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .location-box p { 
+            font-size: 1.2rem; 
+            margin-bottom: 45px; 
+            font-weight: 300;
+        }
+
+        .btn-custom {
+            display: inline-block;
+            padding: 22px 70px;
+            border: 2px solid var(--argos-accent);
+            color: var(--text-light); 
+            background: rgba(85, 107, 47, 0.2); 
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transition: var(--transition-smooth);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-custom:hover { 
+            background: var(--argos-accent); 
+            color: var(--bg-dark); 
+        }
+
+        /* --- ITINERARIO --- */
+        .timeline-container {
+            max-width: 750px;
+            margin: 140px auto;
+            padding: 0 20px;
+        }
+
+        .timeline-container h3 { 
+            font-size: 2.8rem; 
+            margin-bottom: 80px; 
+            text-align: center; 
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 0;
+            border-bottom: 1px solid rgba(244, 244, 244, 0.1);
+        }
+
+        .timeline-row span:first-child { 
+            color: var(--argos-accent); 
+            min-width: 120px; 
+            text-align: left; 
+        }
+
+        .timeline-row span:last-child { 
+            text-align: right; 
+            font-weight: 300; 
+            font-size: 1.1rem; 
+        }
+
+        /* --- MENÚ --- */
+        .menu-section {
+            max-width: 850px;
+            margin: 150px auto 50px;
+            padding: 0 20px;
+        }
+
+        .menu-section h3 { 
+            font-size: 2.8rem; 
+            margin-bottom: 80px; 
+            text-align: center; 
+        }
+
+        .menu-block {
+            margin-bottom: 50px;
+            background: rgba(5, 5, 5, 0.7); 
+            border: 1px solid rgba(85, 107, 47, 0.3);
+            padding: 50px 40px;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+        }
+
+        .menu-block h4 {
+            font-size: 1.6rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            letter-spacing: 4px;
+            text-align: center;
+            border-bottom: 1px solid rgba(85, 107, 47, 0.5);
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .menu-course {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .menu-course strong {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--argos-accent);
+        }
+
+        .menu-course p {
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+        
+        .menu-list {
+            list-style: none;
+            text-align: center;
+            padding: 0;
+        }
+        
+        .menu-list li {
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        /* --- RECOMENDACIONES --- */
+        .recs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .rec-item {
+            padding: 50px;
+            background: rgba(5, 5, 5, 0.7); 
+            border: 1px solid rgba(85, 107, 47, 0.3);
+            text-align: left;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+        }
+
+        .rec-item strong { 
+            display: block; 
+            margin-bottom: 15px; 
+            font-size: 1.1rem; 
+            color: var(--argos-accent);
+        }
+
+        .rec-item p { 
+            font-size: 0.95rem; 
+            font-weight: 300; 
+        }
+
+        /* --- AUDIO --- */
+        #music-btn {
+            position: fixed; 
+            bottom: 40px; 
+            right: 40px; 
+            width: 75px; 
+            height: 75px;
+            border-radius: 50%; 
+            z-index: 5000; 
+            border: 2px solid var(--argos-accent);
+            background: rgba(5, 5, 5, 0.8); 
+            cursor: pointer;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.8rem;
+            transition: var(--transition-smooth); 
+            color: var(--text-light);
+            backdrop-filter: blur(8px);
+        }
+
+        #music-btn:hover { 
+            transform: scale(1.1); 
+            background: var(--argos-accent);
+            color: var(--bg-dark);
+        }
+
+        footer { 
+            padding: 120px 20px; 
+            text-align: center; 
+            border-top: 1px solid rgba(244, 244, 244, 0.1); 
+        }
+
+        /* --- ADAPTACIÓN MÓVIL --- */
+        @media (max-width: 768px) {
+            main { padding: 60px 15px; }
+
+            .date-display { 
+                gap: 20px; 
+                padding: 25px 40px; 
+                margin-bottom: 80px;
+                font-size: clamp(2.2rem, 9vw, 4rem);
+            }
+
+            .timeline-container, .menu-section, .recs-grid {
+                margin-top: 60px;
+            }
+            
+            .timeline-row span:first-child { min-width: 100px; font-size: 0.95rem; }
+            .timeline-row span:last-child { font-size: 0.95rem; }
+            
+            .menu-block { padding: 40px 20px; margin-bottom: 30px; }
+            .rec-item { padding: 40px 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-image"></div>
+    <div class="vignette-overlay"></div>
+
+    <audio id="gradAudio" loop preload="auto" playsinline>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+    <button id="music-btn" onclick="gestionarMusica()">🔇</button>
+
+    <header>
+        <div class="magic-particles">
+            <div class="particle p1"></div>
+            <div class="particle p2"></div>
+            <div class="particle p3"></div>
+            <div class="particle p4"></div>
+            <div class="particle p5"></div>
+        </div>
+
+        <div class="reveal-node">
+            <h1>ARGOS SECUNDARIA</h1>
+            <hr>
+            <p>GENERACIÓN 2026</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="intro-block reveal-node">
+            "Cerramos un capítulo lleno de aprendizajes y aventuras, listos para descubrir lo que el futuro nos tiene preparado. ¡Esta noche es para celebrar juntos!"
+        </div>
+
+        <div class="date-display reveal-node">
+            <span>04</span> <span>07</span> <span>26</span>
+        </div>
+
+        <div class="location-box reveal-node">
+            <h3>RECEPCIÓN</h3>
+            <p>Hacienda El Coecillo<br>Estado de México</p>
+            <a href="https://www.google.com/maps/place/Salón+de+Eventos+Condado+del+Valle/@19.2744797,-99.6359916,16z/data=!4m10!1m2!2m1!1scondado+del+valle!3m6!1s0x85cd8b4c3ce43945:0x97a2c8b94447f7f5!8m2!3d19.2276648!4d-99.5643833!15sChFjb25kYWRvIGRlbCB2YWxsZZIBFmZ1bmN0aW9uX3Jvb21fZmFjaWxpdHngAQA!16s%2Fg%2F11fq1n_3rx?entry=ttu&g_ep=EgoyMDI2MDUyNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-custom">Ver Ubicación</a>
+        </div>
+
+        <article class="timeline-container reveal-node">
+            <h3>Itinerario</h3>
+            <div class="timeline-row"><span>06:00 PM</span><span>RECEPCIÓN</span></div>
+            <div class="timeline-row"><span>07:15 PM</span><span>CENA</span></div>
+            <div class="timeline-row"><span>08:15 PM</span><span>BAILE</span></div>
+            <div class="timeline-row"><span>02:00 AM</span><span>FIN</span></div>
+            <div class="timeline-row"><span>02:00 AM</span><span>DESALOJO (02:00 - 03:00 AM)</span></div>
+        </article>
+
+        <article class="menu-section reveal-node">
+            <h3>Menú</h3>
+
+            <div class="menu-block">
+                <h4>Menú Principal</h4>
+                
+                <div class="menu-course">
+                    <strong>PRIMER TIEMPO</strong>
+                    <p>Crema de pimientos y jitomate rostizado</p>
+                </div>
+                
+                <div class="menu-course">
+                    <strong>PLATO FUERTE</strong>
+                    <p>Filete de cerdo en salsa ciruela y morita</p>
+                </div>
+                
+                <div class="menu-course">
+                    <strong>POSTRE</strong>
+                    <p>Pastel chocolate con frutos rojos</p>
+                </div>
+            </div>
+            
+            <div class="menu-block">
+                <h4>Menú Graduados</h4>
+                <ul class="menu-list">
+                    <li>Ensalada César</li>
+                    <li>Lasaña a la boloñesa</li>
+                    <li>Brownie con helado de vainilla</li>
+                </ul>
+            </div>
+
+            <div class="menu-block">
+                <h4>Menú Vegano y Vegetariano</h4>
+                <ul class="menu-list">
+                    <li>Portobellos en salsa de ciruela y morita</li>
+                </ul>
+            </div>
+
+            <div class="menu-block">
+                <h4>Menú Infantil</h4>
+                <ul class="menu-list">
+                    <li>Fruta</li>
+                    <li>Pasta pomodoro con tiritas de pollo</li>
+                    <li>Brownie con helado de vainilla</li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <aside class="recs-grid reveal-node">
+        <div class="rec-item">
+            <strong>CLIMA Y PROTECCIÓN</strong>
+            <p>Le sugerimos encarecidamente tomar precauciones e ir abrigados ante el clima del lugar.</p>
+        </div>
+        <div class="rec-item">
+            <strong>ACCESO ÚNICO</strong>
+            <p>Considere que el recinto cuenta con un solo acceso habilitado para la entrada.</p>
+        </div>
+        <div class="rec-item">
+            <strong>VALET PARKING</strong>
+            <p>Servicio externo a HC, con costo adicional por auto.</p>
+        </div>
+        <div class="rec-item">
+            <strong>ÁREAS DE FUMAR</strong>
+            <p>Recordamos que el consumo de tabaco está restringido exclusivamente a las áreas exteriores.</p>
+        </div>
+        <div class="rec-item">
+            <strong>MENÚS ESPECIALES</strong>
+            <p>Si requiere menú vegano, vegetariano o por alergias, solicítelo directamente con el comité organizador en la selección de mesas.</p>
+        </div>
+        <div class="rec-item">
+            <strong>KIT Y GUARDARROPA</strong>
+            <p>No hay servicio de guardarropa. El kit de graduado será entregado en la entrada.</p>
+        </div>
+        <div class="rec-item">
+            <strong>OBJETOS PERSONALES</strong>
+            <p>La empresa no se responsabiliza por objetos personales extraviados.</p>
+        </div>
+    </aside>
+
+    <footer>
+        <h2 class="reveal-node">ARGOS SECUNDARIA</h2>
+        <p class="reveal-node">GRADUACIÓN 2026</p>
+    </footer>
+
+    <script>
+        const audio = document.getElementById('gradAudio');
+        const btn = document.getElementById('music-btn');
+
+        function gestionarMusica() {
+            if (audio.paused) {
+                let playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        btn.innerHTML = "🔊";
+                    }).catch(error => {
+                        console.log("Interacción de audio bloqueada por el navegador");
+                    });
+                }
+            } else {
+                audio.pause();
+                btn.innerHTML = "🔇";
+            }
+        }
+
+        ['click', 'touchstart'].forEach(evt => {
+            document.body.addEventListener(evt, () => {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        btn.innerHTML = "🔊";
+                    }).catch(err => console.log("Audio en espera..."));
+                }
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
